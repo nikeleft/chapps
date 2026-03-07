@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHAPPS - Clinical Manager Pro v5.6</title>
+    <style>
+        :root { 
+            --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --text: #f8fafc; 
+            --success: #10b981; --border: #334155; --danger: #ef4444; --warning: #f59e0b;
+        }
+        
+        html, body { 
+            min-height: 100%; margin: 0; background: var(--bg); color: var(--text); 
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            display: flex; flex-direction: column; align-items: center; 
+        }
+        
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; transition: opacity 0.8s ease; text-align: center;
+        }
+
+        .container { width: 100%; max-width: 650px; display: none; padding: 20px; box-sizing: border-box; }
+
+        .card { 
+            background: var(--card); padding: 35px; border-radius: 28px; border: 1px solid var(--border); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); margin: 20px 0; animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        h2 { color: var(--accent); text-align: center; margin-bottom: 25px; }
+        .section-header { text-align: center; color: var(--accent); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; font-size: 0.9rem; }
+        
+        .section-desc {
+            background: rgba(56, 189, 248, 0.08); border-left: 5px solid var(--accent);
+            padding: 18px; border-radius: 12px; margin-bottom: 25px; font-size: 1rem; color: #cbd5e1; line-height: 1.5;
+        }
+
+        .input-label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 5px; margin-left: 5px; }
+        input { width: 100%; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: #0f172a; color: white; box-sizing: border-box; font-size: 1rem; margin-bottom: 15px; }
+        
+        .progress-bar { width: 100%; height: 12px; background: var(--border); border-radius: 20px; margin: 20px 0; overflow: hidden; }
+        #progress { height: 100%; background: linear-gradient(90deg, #0ea5e9, #38bdf8); width: 0%; transition: width 0.4s ease; }
+        
+        .question-text { font-size: 1.4rem; text-align: center; min-height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; font-weight: 600; line-height: 1.3; }
+        
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .opt-btn { 
+            background: #243147; padding: 15px; border-radius: 16px; color: white; border: 2px solid transparent; 
+            cursor: pointer; text-align: left; font-size: 1.05rem; display: flex; align-items: center; gap: 20px; transition: 0.2s;
+        }
+        .opt-btn.selected { border-color: var(--success); background: rgba(16, 185, 129, 0.15); }
+        .opt-value { font-size: 2.2rem; font-weight: 900; min-width: 70px; text-align: center; color: var(--accent); background: rgba(0,0,0,0.2); border-radius: 10px; padding: 5px 0; }
+        
+        .btn-action { width: 100%; padding: 20px; border-radius: 18px; border: none; background: var(--accent); color: var(--bg); font-weight: 800; cursor: pointer; margin-top: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        #admin-section { display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+        .history-card { background: #0f172a; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent); }
+        .del-btn { background: var(--danger); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        
+        .score-circle { width: 150px; height: 150px; border-radius: 50%; border: 8px solid var(--success); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; font-weight: 900; margin: 25px auto; color: var(--success); }
+        .result-row { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div id="splash-screen">
+    <h1 style="color:var(--accent); font-size: 4.5rem; margin:0; letter-spacing: -2px;">CHAPPS</h1>
+    <p style="color:#94a3b8; font-size: 1.2rem; font-weight: 300; letter-spacing: 1px; max-width: 80%;">Children's Auditory Performance Scale</p>
+</div>
+
+<div class="container" id="app-container">
+    <div id="screen-start" class="card">
+        <h2>Στοιχεία Εξεταζόμενου</h2>
+        <span class="input-label">Ονοματεπώνυμο παιδιού</span>
+        <input type="text" id="pName" placeholder="Εισάγετε όνομα">
+        <span class="input-label">Ημερομηνία Γέννησης</span>
+        <input type="text" id="pDOB" placeholder="ΗΗ/ΜΜ/ΕΕΕΕ" maxlength="10" oninput="formatDate(this)">
+        <span class="input-label">Email επικοινωνίας</span>
+        <input type="email" id="pEmail" placeholder="name@example.com">
+        <span class="input-label">Ποιος συμπληρώνει το ερωτηματολόγιο;</span>
+        <input type="text" id="pResponder" placeholder="π.χ. Μητέρα, Πατέρας, Εκπαιδευτικός">
+        <button class="btn-action" onclick="startTest()">ΕΝΑΡΞΗ ΑΞΙΟΛΟΓΗΣΗΣ</button>
+        
+        <div style="text-align: center; margin-top: 30px; cursor: pointer; color: #475569;" onclick="unlockAdmin()">🔒 Διαχείριση (Admin)</div>
+        
+        <div id="admin-section">
+            <h3 style="color:var(--accent); text-align:center;">Αναζήτηση Ιστορικού</h3>
+            <input type="text" id="searchBar" style="border-color:var(--accent);" placeholder="🔍 Πληκτρολογήστε όνομα για εύρεση..." oninput="renderHistory()">
+            <div id="history-list"></div>
+            <button class="btn-action" style="background: var(--warning); margin-top:20px;" onclick="exportMasterCSV()">ΕΞΑΓΩΓΗ MASTER EXCEL</button>
+            <button class="btn-action" style="background: var(--danger); font-size: 0.8rem;" onclick="deleteAllData()">ΕΚΚΑΘΑΡΙΣΗ ΒΑΣΗΣ</button>
+        </div>
+    </div>
+
+    <div id="screen-test" class="card hidden">
+        <div id="cat-label" class="section-header"></div>
+        <div class="progress-bar"><div id="progress"></div></div>
+        <div id="cat-desc" class="section-desc"></div>
+        <div id="q-text" class="question-text"></div>
+        <div id="options-list" class="options"></div>
+        <div style="display:flex; gap:10px; margin-top:30px;">
+            <button id="prev-btn" style="flex:1; padding:18px; border-radius:15px; background:rgba(255,255,255,0.05); color:white; border:1px solid var(--border); cursor:pointer;" onclick="goBack()">← ΠΙΣΩ</button>
+            <button id="next-btn" style="flex:1; padding:18px; border-radius:15px; background:var(--accent); color:var(--bg); border:none; font-weight:bold; cursor:pointer;" onclick="goNext()">ΕΠΟΜΕΝΟ →</button>
+        </div>
+    </div>
+
+    <div id="screen-results" class="card hidden">
+        <h2 id="res-name-display" style="margin-bottom: 5px;"></h2>
+        <p id="res-age-display" style="text-align: center; color: var(--accent); font-weight: bold;"></p>
+        <div class="score-circle" id="total-score"></div>
+        <div id="breakdown-list"></div>
+        <button class="btn-action" onclick="sendToDoctor()" style="background: var(--success); color: white;">📧 ΑΠΟΣΤΟΛΗ ΣΤΟΝ ΙΑΤΡΟ</button>
+        <button class="btn-action" onclick="exportCSV()" style="background: var(--warning); color: white;">📊 ΑΤΟΜΙΚΟ CSV</button>
+        <button class="btn-action" onclick="location.reload()" style="background: transparent; color: #94a3b8; border: 1px solid var(--border);">ΝΕΑ ΑΞΙΟΛΟΓΗΣΗ</button>
+    </div>
+</div>
+
+<script>
+    const sections = [
+        { name: "Θόρυβος", desc: "Αν ακούει σε ένα δωμάτιο με θόρυβο από τηλεόραση, μουσική, κ.α. αυτό το παιδί έχει δυσκολία στο να ακούσει όταν συγκριθεί με άλλα παιδιά.", questions: ["Όταν προσέχει.", "Όταν πρέπει να απαντήσει σε μια ερώτηση.", "Όταν του δοθούν απλές οδηγίες.", "Όταν του δοθούν πολύπλοκες οδηγίες.", "Όταν δεν προσέχει.", "Όταν πραγματοποιεί και άλλες δραστηριότητες.", "Όταν βρίσκεται με ομάδα παιδιών."] },
+        { name: "Ησυχία", desc: "Αν ακούει σε ένα ήσυχο δωμάτιο αυτό το παιδί έχει δυσκολία στο να ακούσει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν προσέχει.", "Όταν πρέπει να απαντήσει σε μια ερώτηση.", "Όταν του δοθούν απλές οδηγίες.", "Όταν του δοθούν πολύπλοκες οδηγίες.", "Όταν δεν προσέχει.", "Όταν πραγματοποιεί και άλλες δραστηριότητες.", "Όταν βρίσκεται με ομάδα παιδιών."] },
+        { name: "Ιδανικές συνθήκες", desc: "Αν ακούει σε ένα ήσυχο δωμάτιο, χωρίς άλλα ερεθίσματα, πρόσωπο με πρόσωπο.", questions: ["Όταν πρέπει να απαντήσει σε μια ερώτηση.", "Όταν του δοθούν απλές οδηγίες.", "Όταν του δοθούν πολύπλοκες οδηγίες."] },
+        { name: "Πολλαπλά ερεθίσματα", desc: "Αν σε συνδυασμό με το ότι ακούει, υπάρχει και κάποιο άλλο ερέθισμα (οπτικό, αφής).", questions: ["Όταν ακούει και βλέπει το πρόσωπο του ομιλητή.", "Όταν ακούει και διαβάζει από μέσα του.", "Όταν ακούει και παρακολουθεί τον δάσκαλο."] },
+        { name: "Ακουστική μνήμη", desc: "Αν πρέπει να ανακαλέσει πληροφορίες που του δόθηκαν με προφορικό λόγο.", questions: ["Να ανακαλέσει αμέσως λέξεις, ορθογραφία.", "Να ανακαλέσει αμέσως απλές οδηγίες.", "Να ανακαλέσει αμέσως πολύπλοκες οδηγίες.", "Να ανακαλέσει τη σειρά με την οποία ειπώθηκαν.", "Να ανακαλέσει πληροφορίες μετά από 1 ώρα.", "Να ανακαλέσει απλές οδηγίες μετά από 1 ώρα.", "Να ανακαλέσει σύνθετες οδηγίες μετά από 1 ώρα.", "Όταν μεσολαβεί μία ημέρα ή περισσότερες."] },
+        { name: "Χρόνος προσοχής", desc: "Ανάλογα με τον χρόνο που απαιτείται από το παιδί να παρακολουθήσει.", questions: ["Για λιγότερο από 5 λεπτά.", "Για 5-10 λεπτά.", "Για πάνω από 10 λεπτά.", "Σε ένα ήσυχο δωμάτιο.", "Σε ένα δωμάτιο με θόρυβο.", "Μόλις ξυπνήσει το πρωί.", "Λίγο πριν κοιμηθεί το βράδυ.", "Όταν υπάρχουν άλλα παιδιά."] }
+    ];
+
+    let flatQuestions = [];
+    sections.forEach(s => s.questions.forEach(q => flatQuestions.push({ text: q, cat: s.name, desc: s.desc })));
+
+    const scale = [
+        { v: 1, l: "+1", d: "μικρότερη δυσκολία" },
+        { v: 0, l: "0", d: "ίδιος βαθμός δυσκολίας" },
+        { v: -1, l: "-1", d: "ελαφρώς μεγαλύτερη" },
+        { v: -2, l: "-2", d: "μεγαλύτερη δυσκολία" },
+        { v: -3, l: "-3", d: "αρκετά μεγαλύτερη" },
+        { v: -4, l: "-4", d: "σημαντικά μεγαλύτερη" },
+        { v: -5, l: "-5", d: "αδυναμία λειτουργίας" }
+    ];
+
+    let currentIdx = 0;
+    let answers = new Array(flatQuestions.length).fill(null);
+    let patientData = {};
+
+    function formatDate(i) {
+        let v = i.value.replace(/\D/g, '').slice(0, 8);
+        if (v.length >= 2) v = v.slice(0, 2) + '/' + v.slice(2);
+        if (v.length >= 5) v = v.slice(0, 5) + '/' + v.slice(5);
+        i.value = v;
+    }
+
+    function calculateAge(dobStr) {
+        const parts = dobStr.split('/');
+        if(parts.length < 3) return "N/A";
+        const birthDate = new Date(parts[2], parts[1] - 1, parts[0]);
+        const today = new Date();
+        let years = today.getFullYear() - birthDate.getFullYear();
+        let months = today.getMonth() - birthDate.getMonth();
+        if (months < 0 || (months === 0 && today.getDate() < birthDate.getDate())) { years--; months += 12; }
+        return `${years} ετών, ${months} μηνών`;
+    }
+
+    function unlockAdmin() {
+        if(prompt("Κωδικός Διαχειριστή:") === "apd7") {
+            document.getElementById('admin-section').style.display = 'block';
+        } else { alert("Λάθος κωδικός."); }
+    }
+
+    function startTest() {
+        const name = document.getElementById('pName').value;
+        const dob = document.getElementById('pDOB').value;
+        if(!name || dob.length < 10) return alert("Συμπληρώστε τα στοιχεία.");
+        patientData = { 
+            name, dob, 
+            age: calculateAge(dob), 
+            email: document.getElementById('pEmail').value, 
+            responder: document.getElementById('pResponder').value,
+            date: new Date().toLocaleDateString('el-GR'), id: Date.now() 
+        };
+        document.getElementById('screen-start').classList.add('hidden');
+        document.getElementById('screen-test').classList.remove('hidden');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = flatQuestions[currentIdx];
+        document.getElementById('cat-label').innerText = q.cat;
+        document.getElementById('cat-desc').innerText = q.desc;
+        document.getElementById('q-text').innerText = `${currentIdx + 1}. ${q.text}.`;
+        document.getElementById('progress').style.width = ((currentIdx + 1) / flatQuestions.length * 100) + "%";
+        
+        const list = document.getElementById('options-list');
+        list.innerHTML = "";
+        scale.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'opt-btn' + (answers[currentIdx] === opt.v ? ' selected' : '');
+            btn.innerHTML = `<span class="opt-value">${opt.l}</span><span>${opt.d}</span>`;
+            btn.onclick = () => { 
+                answers[currentIdx] = opt.v; 
+                renderQuestion(); 
+                if (currentIdx < flatQuestions.length - 1) setTimeout(goNext, 250);
+            };
+            list.appendChild(btn);
+        });
+        
+        document.getElementById('prev-btn').style.visibility = currentIdx > 0 ? 'visible' : 'hidden';
+        document.getElementById('next-btn').innerText = currentIdx === flatQuestions.length - 1 ? "ΤΕΛΟΣ" : "ΕΠΟΜΕΝΟ →";
+    }
+
+    function goNext() {
+        if(answers[currentIdx] === null) return alert("Επιλέξτε απάντηση.");
+        if(currentIdx < flatQuestions.length - 1) { 
+            currentIdx++; renderQuestion(); 
+        } else { 
+            finalize(); 
+        }
+    }
+
+    function goBack() { if(currentIdx > 0) { currentIdx--; renderQuestion(); } }
+
+    function finalize() {
+        patientData.total = answers.reduce((a, b) => a + b, 0);
+        patientData.answers = [...answers];
+        let db = JSON.parse(localStorage.getItem('chapps_db') || "[]");
+        db.push(patientData);
+        localStorage.setItem('chapps_db', JSON.stringify(db));
+        showResults();
+    }
+
+    function showResults() {
+        document.getElementById('screen-test').classList.add('hidden');
+        document.getElementById('screen-results').classList.remove('hidden');
+        document.getElementById('res-name-display').innerText = patientData.name;
+        document.getElementById('res-age-display').innerText = `Ηλικία: ${patientData.age} (Από: ${patientData.responder})`;
+        document.getElementById('total-score').innerText = patientData.total;
+        const breakdown = document.getElementById('breakdown-list');
+        breakdown.innerHTML = "<h3>Ανάλυση Ενοτήτων</h3>";
+        sections.forEach(s => {
+            const sSum = flatQuestions.map((q, i) => q.cat === s.name ? patientData.answers[i] : null).filter(v => v !== null).reduce((a, b) => a + b, 0);
+            breakdown.innerHTML += `<div class="result-row"><span>${s.name}</span><strong>${sSum}</strong></div>`;
+        });
+    }
+
+    function renderHistory() {
+        const list = document.getElementById('history-list');
+        const search = document.getElementById('searchBar').value.toLowerCase();
+        list.innerHTML = "";
+        if (search.length < 2) return;
+        let db = JSON.parse(localStorage.getItem('chapps_db') || "[]");
+        db.filter(r => r.name.toLowerCase().includes(search)).reverse().forEach(record => {
+            const item = document.createElement('div');
+            item.className = 'history-card';
+            item.innerHTML = `<div><strong>${record.name}</strong><br><small>${record.date}</small></div>
+            <button class="del-btn" onclick="deleteRecord(${record.id})">ΔΙΑΓΡΑΦΗ</button>`;
+            list.appendChild(item);
+        });
+    }
+
+    function deleteRecord(id) {
+        if(!confirm("Διαγραφή;")) return;
+        let db = JSON.parse(localStorage.getItem('chapps_db') || "[]");
+        db = db.filter(r => r.id !== id);
+        localStorage.setItem('chapps_db', JSON.stringify(db));
+        renderHistory();
+    }
+
+    function deleteAllData() {
+        if(!confirm("Διαγραφή όλων;")) return;
+        localStorage.removeItem('chapps_db');
+        renderHistory();
+    }
+
+    function exportCSV() {
+        let csv = `CHAPPS REPORT;${patientData.name}\nΗλικία;${patientData.age}\nΣυμπληρώθηκε από;${patientData.responder}\nΣκορ;${patientData.total}\n\nΕνότητα;Ερώτηση;Βαθμός\n`;
+        flatQuestions.forEach((q, i) => csv += `"${q.cat}";"${q.text}";${patientData.answers[i]}\n`);
+        downloadCSV(csv, `CHAPPS_${patientData.name}.csv`);
+    }
+
+    function exportMasterCSV() {
+        let db = JSON.parse(localStorage.getItem('chapps_db') || "[]");
+        let csv = "Όνομα;Ηλικία;Συμπληρώθηκε Από;Σκορ\n";
+        db.forEach(r => csv += `"${r.name}";"${r.age}";"${r.responder}";${r.total}\n`);
+        downloadCSV(csv, "CHAPPS_MASTER.csv");
+    }
+
+    function downloadCSV(csv, filename) {
+        const blob = new Blob(["\uFEFF", csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+    }
+
+    function sendToDoctor() {
+        let body = `CHAPPS - ${patientData.name}\nΗλικία: ${patientData.age}\nΣκορ: ${patientData.total}\n\nΑνάλυση:\n`;
+        sections.forEach(s => {
+            const sSum = flatQuestions.map((q, i) => q.cat === s.name ? patientData.answers[i] : null).filter(v => v !== null).reduce((a, b) => a + b, 0);
+            body += `${s.name}: ${sSum}\n`;
+        });
+        window.location.href = `mailto:?subject=CHAPPS - ${patientData.name}&body=${encodeURIComponent(body)}`;
+    }
+
+    window.onload = () => { setTimeout(() => { document.getElementById('splash-screen').style.opacity = '0'; setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; document.getElementById('app-container').style.display = 'block'; }, 800); }, 2000); };
+</script>
+</body>
+</html>
