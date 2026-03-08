@@ -11,10 +11,9 @@
         }
         
         html, body { 
-            min-height: 100vh; margin: 0; background: var(--bg); color: var(--text); 
+            height: 100vh; margin: 0; background: var(--bg); color: var(--text); 
             font-family: 'Segoe UI', Roboto, sans-serif;
-            display: flex; flex-direction: column; align-items: center; 
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
         }
         
         #splash-screen {
@@ -24,79 +23,68 @@
             z-index: 9999; transition: opacity 0.8s ease; text-align: center;
         }
 
-        .container { width: 100%; max-width: 650px; display: none; padding: 20px; box-sizing: border-box; }
+        .container { width: 95%; max-width: 850px; display: none; padding: 10px; box-sizing: border-box; }
 
         .card { 
-            background: var(--card); padding: 35px; border-radius: 28px; border: 1px solid var(--border); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4); margin: 20px 0; animation: slideUp 0.5s ease;
+            background: var(--card); padding: 15px 25px; border-radius: 24px; border: 1px solid var(--border); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); animation: slideUp 0.5s ease;
+            max-height: 98vh; display: flex; flex-direction: column; overflow-y: auto;
         }
 
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        h2 { color: var(--accent); text-align: center; margin-bottom: 25px; }
-        .section-header { text-align: center; color: var(--accent); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; font-size: 0.9rem; }
+        h2 { color: var(--accent); text-align: center; margin: 5px 0; font-size: 1.3rem; }
+        .section-header { text-align: center; color: var(--accent); font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
         
         .section-desc {
-            background: rgba(56, 189, 248, 0.08); border-left: 5px solid var(--accent);
-            padding: 18px; border-radius: 12px; margin-bottom: 25px; font-size: 1rem; color: #cbd5e1; line-height: 1.5;
+            background: rgba(56, 189, 248, 0.06); border-left: 4px solid var(--accent);
+            padding: 8px 12px; border-radius: 10px; margin: 8px 0; font-size: 0.8rem; color: #cbd5e1; line-height: 1.3;
         }
 
-        .input-label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 5px; margin-left: 5px; }
-        input { width: 100%; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: #0f172a; color: white; box-sizing: border-box; font-size: 1rem; margin-bottom: 15px; }
+        input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: #0f172a; color: white; box-sizing: border-box; font-size: 0.9rem; margin-bottom: 8px; }
         
-        .progress-bar { width: 100%; height: 12px; background: var(--border); border-radius: 20px; margin: 20px 0; overflow: hidden; }
-        #progress { height: 100%; background: linear-gradient(90deg, #0ea5e9, #38bdf8); width: 0%; transition: width 0.4s ease; }
+        .progress-bar { width: 100%; height: 6px; background: var(--border); border-radius: 10px; margin: 5px 0; overflow: hidden; }
+        #progress { height: 100%; background: linear-gradient(90deg, #0ea5e9, #38bdf8); width: 0%; transition: width 0.3s ease; }
         
-        .question-text { font-size: 1.4rem; text-align: center; min-height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; font-weight: 600; line-height: 1.3; }
+        .question-text { font-size: 1.05rem; text-align: center; min-height: 50px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-weight: 600; line-height: 1.2; color: #fff; }
         
-        .options { display: flex; flex-direction: column; gap: 12px; }
+        .options { display: flex; flex-direction: column; gap: 4px; }
         .opt-btn { 
-            background: #243147; padding: 15px; border-radius: 16px; color: white; 
+            background: #243147; padding: 6px 10px; border-radius: 10px; color: white; 
             border: 2px solid var(--warning); 
-            cursor: pointer; text-align: left; font-size: 1.05rem; display: flex; align-items: center; gap: 20px; transition: 0.2s;
+            cursor: pointer; text-align: left; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; transition: 0.1s;
         }
         .opt-btn.selected { border-color: var(--success); background: rgba(16, 185, 129, 0.15); }
-        .opt-value { font-size: 2.2rem; font-weight: 900; min-width: 70px; text-align: center; color: var(--accent); background: rgba(0,0,0,0.2); border-radius: 10px; padding: 5px 0; }
+        .opt-value { font-size: 1.5rem; font-weight: 900; min-width: 50px; text-align: center; color: var(--accent); background: rgba(0,0,0,0.2); border-radius: 6px; padding: 2px 0; }
+        .opt-text { font-size: 0.9rem; }
         
-        .btn-action { width: 100%; padding: 20px; border-radius: 18px; border: none; background: var(--accent); color: var(--bg); font-weight: 800; cursor: pointer; margin-top: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-        
-        #admin-section { display: none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
-        .history-card { background: #0f172a; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent); }
-        .del-btn { background: var(--danger); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        
-        .score-circle { width: 150px; height: 150px; border-radius: 50%; border: 8px solid var(--success); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; font-weight: 900; margin: 25px auto; color: var(--success); }
-        .result-row { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); }
+        .btn-action { width: 100%; padding: 14px; border-radius: 14px; border: none; background: var(--accent); color: var(--bg); font-weight: 800; cursor: pointer; margin-top: 8px; font-size: 0.9rem; text-transform: uppercase; }
+        .history-item { background: #0f172a; padding: 10px; border-radius: 10px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; border-left: 3px solid var(--accent); }
+        .result-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+        .category-score { background: var(--accent); color: var(--bg); padding: 2px 8px; border-radius: 6px; font-weight: 800; }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
 <div id="splash-screen">
-    <h1 style="color:var(--accent); font-size: 4.5rem; margin:0; letter-spacing: -2px;">CHAPPS</h1>
-    <p style="color:#94a3b8; font-size: 1.2rem; font-weight: 300; letter-spacing: 1px; max-width: 80%;">Children's Auditory Performance Scale</p>
+    <h1 style="color:var(--accent); font-size: 3.5rem; margin:0;">CHAPPS</h1>
+    <p style="color:#94a3b8;">Children's Auditory Performance Scale</p>
 </div>
 
 <div class="container" id="app-container">
     <div id="screen-start" class="card">
         <h2>Στοιχεία Εξεταζόμενου</h2>
-        <span class="input-label">Ονοματεπώνυμο παιδιού</span>
-        <input type="text" id="pName" placeholder="Εισάγετε όνομα">
-        <span class="input-label">Ημερομηνία Γέννησης</span>
-        <input type="text" id="pDOB" placeholder="ΗΗ/ΜΜ/ΕΕΕΕ" maxlength="10" oninput="formatDate(this)">
-        <span class="input-label">Email επικοινωνίας</span>
-        <input type="email" id="pEmail" placeholder="name@example.com">
-        <span class="input-label">Ποιος συμπληρώνει το ερωτηματολόγιο;</span>
-        <input type="text" id="pResponder" placeholder="π.χ. Μητέρα, Πατέρας, Εκπαιδευτικός">
+        <input type="text" id="pName" placeholder="Ονοματεπώνυμο παιδιού">
+        <input type="text" id="pDOB" placeholder="Ημερομηνία Γέννησης (ΗΗ/ΜΜ/ΕΕΕΕ)" maxlength="10" oninput="formatDate(this)">
+        <input type="email" id="pEmail" placeholder="Email επικοινωνίας">
+        <input type="text" id="pResponder" placeholder="Ποιος συμπληρώνει (π.χ. Μητέρα)">
         <button class="btn-action" onclick="startTest()">ΕΝΑΡΞΗ ΑΞΙΟΛΟΓΗΣΗΣ</button>
-        
-        <div style="text-align: center; margin-top: 30px; cursor: pointer; color: #475569;" onclick="unlockAdmin()">🔒 Διαχείριση (Admin)</div>
-        
-        <div id="admin-section">
-            <h3 style="color:var(--accent); text-align:center;">Αναζήτηση Ιστορικού</h3>
-            <input type="text" id="searchBar" style="border-color:var(--accent);" placeholder="🔍 Πληκτρολογήστε όνομα για εύρεση..." oninput="renderHistory()">
-            <div id="history-list"></div>
-            <button class="btn-action" style="background: var(--warning); margin-top:20px;" onclick="exportMasterCSV()">ΕΞΑΓΩΓΗ MASTER EXCEL</button>
-            <button class="btn-action" style="background: var(--danger); font-size: 0.8rem;" onclick="deleteAllData()">ΕΚΚΑΘΑΡΙΣΗ ΒΑΣΗΣ</button>
+        <div style="text-align: center; margin-top: 15px; cursor: pointer; color: #475569; font-size: 0.75rem;" onclick="unlockAdmin()">🔒 Διαχείριση Ιστορικού</div>
+        <div id="admin-panel" class="hidden" style="margin-top:10px; border-top:1px solid var(--border); padding-top:10px;">
+            <input type="text" id="searchBar" placeholder="🔍 Αναζήτηση..." oninput="renderHistory()">
+            <div id="history-list" style="max-height: 120px; overflow-y: auto;"></div>
+            <button class="btn-action" style="background: var(--warning); font-size:0.7rem;" onclick="exportMasterCSV()">MASTER EXCEL</button>
         </div>
     </div>
 
@@ -106,49 +94,37 @@
         <div id="cat-desc" class="section-desc"></div>
         <div id="q-text" class="question-text"></div>
         <div id="options-list" class="options"></div>
-        <div style="display:flex; gap:10px; margin-top:30px;">
-            <button id="prev-btn" style="flex:1; padding:18px; border-radius:15px; background:rgba(255,255,255,0.05); color:white; border:1px solid var(--border); cursor:pointer;" onclick="goBack()">← ΠΙΣΩ</button>
-            <button id="next-btn" style="flex:1; padding:18px; border-radius:15px; background:var(--accent); color:var(--bg); border:none; font-weight:bold; cursor:pointer;" onclick="goNext()">ΕΠΟΜΕΝΟ →</button>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+            <button id="prev-btn" style="flex:1; padding:10px; border-radius:10px; background:rgba(255,255,255,0.05); color:white; border:1px solid var(--border); cursor:pointer;" onclick="goBack()">← ΠΙΣΩ</button>
+            <button id="next-btn" class="btn-action" style="flex:1; margin-top:0;" onclick="goNext()">ΕΠΟΜΕΝΟ →</button>
         </div>
     </div>
 
     <div id="screen-results" class="card hidden">
-        <h2 id="res-name-display" style="margin-bottom: 5px;"></h2>
-        <p id="res-age-display" style="text-align: center; color: var(--accent); font-weight: bold;"></p>
-        <div class="score-circle" id="total-score"></div>
+        <h2 id="res-name-display" style="margin-bottom:0;"></h2>
+        <p id="res-info-display" style="text-align:center; color:var(--accent); font-size:0.85rem; margin:5px 0;"></p>
+        <div id="total-score" style="text-align:center; font-size: 2.5rem; color: var(--success); font-weight: 900;"></div>
         <div id="breakdown-list"></div>
-        <button class="btn-action" onclick="sendToDoctor()" style="background: var(--success); color: white;">📧 ΑΠΟΣΤΟΛΗ ΣΤΟΝ ΙΑΤΡΟ</button>
-        <button class="btn-action" onclick="exportCSV()" style="background: var(--warning); color: white;">📊 ΑΤΟΜΙΚΟ CSV</button>
+        <button class="btn-action" style="background: var(--success); color:white;" onclick="sendToDoctor()">📧 ΑΠΟΣΤΟΛΗ ΣΤΟΝ ΙΑΤΡΟ</button>
+        <button class="btn-action" style="background: var(--warning); color:white;" onclick="exportCSV()">📊 ΕΞΑΓΩΓΗ ΑΤΟΜΙΚΟΥ CSV</button>
         <button class="btn-action" onclick="location.reload()" style="background: transparent; color: #94a3b8; border: 1px solid var(--border);">ΝΕΑ ΑΞΙΟΛΟΓΗΣΗ</button>
     </div>
 </div>
 
 <script>
     const sections = [
-        { name: "Θόρυβος", desc: "Αν ακούει σε ένα δωμάτιο με θόρυβο από τηλεόραση, μουσική, κ.α. αυτό το παιδί έχει δυσκολία στο να ακούσει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν προσέχει.", "Όταν πρέπει να απαντήσει σε μια ερώτηση.", "Όταν του δοθούν απλές οδηγίες.", "Όταν του δοθούν πολύπλοκες οδηγίες.", "Όταν δεν προσέχει.", "Όταν πραγματοποιεί και άλλες δραστηριότητες.", "Όταν βρίσκεται με ομάδα παιδιών."] },
-        { name: "Ησυχία", desc: "Αν ακούει σε ένα ήσυχο δωμάτιο αυτό το παιδί έχει δυσκολία στο να ακούσει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν προσέχει.", "Όταν πρέπει να απαντήσει σε μια ερώτηση.", "Όταν του δοθούν απλές οδηγίες.", "Όταν του δοθούν πολύπλοκες οδηγίες.", "Όταν δεν προσέχει.", "Όταν πραγματοποιεί και άλλες δραστηριότητες.", "Όταν βρίσκεται με ομάδα παιδιών."] },
-        { name: "Ιδανικές συνθήκες", desc: "Αν ακούει σε ένα ήσυχο δωμάτιο, χωρίς άλλα ερεθίσματα, πρόσωπο με πρόσωπο, αυτό το παιδί έχει δυσκολία στο να ακούσει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν πρέπει να απαντήσει σε μια ερώτηση.", "Όταν του δοθούν απλές οδηγίες.", "Όταν του δοθούν πολύπλοκες οδηγίες."] },
-        { name: "Πολλαπλά ερεθίσματα", desc: "Αν σε συνδυασμό με το ότι ακούει, υπάρχει και κάποιο άλλο ερέθισμα (οπτικό, αφής), αυτό το παιδί έχει δυσκολία στο να ακούσει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν ακούει και βλέπει το πρόσωπο του ομιλητή.", "Όταν ακούει και διαβάζει από μέσα του.", "Όταν ακούει και παρακολουθεί τον δάσκαλο."] },
-        { name: "Ακουστική μνήμη", desc: "Αν πρέπει να ανακαλέσει πληροφορίες που του δόθηκαν με προφορικό λόγο, αυτό το παιδί έχει δυσκολία στο να ακούσει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Να ανακαλέσει αμέσως λέξεις, ορθογραφία.", "Να ανακαλέσει αμέσως απλές οδηγίες.", "Να ανακαλέσει αμέσως πολύπλοκες οδηγίες.", "Να ανακαλέσει τη σειρά με την οποία ειπώθηκαν.", "Να ανακαλέσει πληροφορίες μετά από 1 ώρα.", "Να ανακαλέσει απλές οδηγίες μετά από 1 ώρα.", "Να ανακαλέσει σύνθετες οδηγίες μετά από 1 ώρα.", "Όταν μεσολαβεί μία ημέρα ή περισσότερες."] },
-        { name: "Χρόνος προσοχής", desc: "Ανάλογα με τον χρόνο που απαιτείται από το παιδί να παρακολουθήσει, αυτό το παιδί έχει δυσκολία στο να ακούσει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Για λιγότερο από 5 λεπτά.", "Για 5-10 λεπτά.", "Για πάνω από 10 λεπτά.", "Σε ένα ήσυχο δωμάτιο.", "Σε ένα δωμάτιο με θόρυβο.", "Μόλις ξυπνήσει το πρωί.", "Λίγο πριν κοιμηθεί το βράδυ.", "Όταν υπάρχουν άλλα παιδιά."] }
+        { name: "ΘΟΡΥΒΟΣ", desc: "Αν ακούει σε ένα δωμάτιο με θόρυβο από τηλεόραση, μουσική, άλλα άτομα που μιλούν, παιδιά που παίζουν κ.α. αυτό το παιδί έχει δυσκολία στο να ακούσει και να καταλάβει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν προσέχει", "Όταν πρέπει να απαντήσει σε μια ερώτηση", "Όταν του δοθούν απλές-σύντομες οδηγίες", "Όταν του δοθούν πολύπλοκες οδηγίες", "Όταν δεν προσέχει", "Όταν πραγματοποιεί και άλλες δραστηριότητες π.χ ζωγραφίζει, διαβάζει", "Όταν βρίσκεται με ομάδα παιδιών"] },
+        { name: "ΗΣΥΧΙΑ", desc: "Αν ακούει σε ένα ήσυχο δωμάτιο (όπου μπορεί να υπάρχουν και άλλα άτομα χωρίς όμως να κάνουν φασαρία) αυτό το παιδί έχει δυσκολία στο να ακούσει και να καταλάβει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν προσέχει", "Όταν πρέπει να απαντήσει σε μια ερώτηση", "Όταν του δοθούν απλές-σύντομες οδηγίες", "Όταν του δοθούν πολύπλοκες οδηγίες", "Όταν δεν προσέχει", "Όταν πραγματοποιεί και άλλες δραστηριότητες π.χ ζωγραφίζει, διαβάζει", "Όταν βρίσκεται με ομάδα παιδιών"] },
+        { name: "ΙΔΑΝΙΚΕΣ ΣΥΝΘΗΚΕΣ", desc: "Αν ακούει σε ένα ήσυχο δωμάτιο, χωρίς άλλα ερεθίσματα, που να του αποσπούν την προσοχή, πρόσωπο με πρόσωπο και βλέποντας τον ομιλητή αυτό το παιδί έχει δυσκολία στο να ακούσει και να καταλάβει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν πρέπει να απαντήσει σε μια ερώτηση", "Όταν του δοθούν απλές-σύντομες οδηγίες", "Όταν του δοθούν πολύπλοκες οδηγίες"] },
+        { name: "ΠΟΛΛΑΠΛΑ ΕΡΕΘΙΣΜΑΤΑ", desc: "Αν σε συνδυασμό με το ότι ακούει, υπάρχει και κάποιο άλλο ερέθισμα (οπτικό, αφής, κ.α), αυτό το παιδί έχει δυσκολία στο να ακούσει και να καταλάβει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Όταν ακούει και βλέπει το πρόσωπο του ομιλητή", "Όταν ακούει και διαβάζει από μέσα του καθώς ένα κείμενο διαβάζεται για όλη την τάξη από την δασκάλα", "Όταν ακούει και παρακολουθεί τον δάσκαλο να ζωγραφίζει κάτι στον πίνακα ή να δείχνει κάτι σε διαφάνειες ή μεγάλες κάρτες"] },
+        { name: "ΑΚΟΥΣΤΙΚΗ ΜΝΗΜΗ", desc: "Αν πρέπει να ανακαλέσει πληροφορίες, που του δόθηκαν με προφορικό λόγο, αυτό το παιδί έχει δυσκολία στο να ακούσει και να καταλάβει όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας.", questions: ["Να ανακαλέσει αμέσως πληροφορίες, όπως λέξεις, ορθογραφία, αριθμούς", "Να ανακαλέσει αμέσως απλές οδηγίες", "Να ανακαλέσει αμέσως πολύπλοκες οδηγίες", "Όχι μόνο υπάρχει δυσκολία στο να ανακαλέσει πληροφορίες, αλλά έχει δυσκολία και στο να ανακαλέσει την σειρά με την οποία ειπώθηκαν ή πρέπει να γίνουν", "Όταν πρέπει να ανακαλέσει πληροφορίες μετά από τουλάχιστον 1 ώρα (λέξεις, ορθογραφία, αριθμούς)", "Όταν πρέπει να ανακαλέσει απλές οδηγίες μετά από τουλάχιστον 1 ώρα", "Όταν πρέπει να ανακαλέσει σύνθετες-πολύπλοκες οδηγίες μετά από τουλάχιστον 1 ώρα", "Όταν μεσολαβεί μία ημέρα ή και περισσότερες"] },
+        { name: "ΧΡΟΝΟΣ ΠΡΟΣΟΧΗΣ", desc: "Ανάλογα με τον χρόνο που απαιτείται από το παιδί να παρακολουθήσει, αυτό το παιδί έχει δυσκολία να ακούσει με προσοχή, όταν συγκριθεί με άλλα παιδιά της ίδιας ηλικίας", questions: ["Όταν πρέπει να ακούσει με προσοχή για λιγότερο από 5 λεπτά", "Όταν ο χρόνος που πρέπει να ακούσει είναι 5-10 λεπτά", "Όταν πρέπει να ακούσει για πάνω από 10 λεπτά", "Όταν ακούει σε ένα ήσυχο δωμάτιο", "Όταν ακούσει σε ένα δωμάτιο με θόρυβο", "Όταν ακούει μόλις ξυπνήσει το πρωί", "Όταν ακούει λίγο πριν πάει να κοιμηθεί το βράδυ", "Όταν ακούσει σε ένα δωμάτιο και υπάρχουν άλλα παιδιά ή το αγαπημένο του παιχνίδι"] }
     ];
 
     let flatQuestions = [];
     sections.forEach(s => s.questions.forEach(q => flatQuestions.push({ text: q, cat: s.name, desc: s.desc })));
 
-    const scale = [
-        { v: 1, l: "+1", d: "μικρότερη δυσκολία" },
-        { v: 0, l: "0", d: "ίδιος βαθμός δυσκολίας" },
-        { v: -1, l: "-1", d: "ελαφρώς μεγαλύτερη" },
-        { v: -2, l: "-2", d: "μεγαλύτερη δυσκολία" },
-        { v: -3, l: "-3", d: "αρκετά μεγαλύτερη" },
-        { v: -4, l: "-4", d: "σημαντικά μεγαλύτερη" },
-        { v: -5, l: "-5", d: "αδυναμία λειτουργίας" }
-    ];
-
-    let currentIdx = 0;
-    let answers = new Array(flatQuestions.length).fill(null);
-    let patientData = {};
+    let currentIdx = 0, answers = new Array(flatQuestions.length).fill(null), patientData = {};
 
     function formatDate(i) {
         let v = i.value.replace(/\D/g, '').slice(0, 8);
@@ -157,34 +133,19 @@
         i.value = v;
     }
 
-    function calculateAge(dobStr) {
-        const parts = dobStr.split('/');
-        if(parts.length < 3) return "N/A";
-        const birthDate = new Date(parts[2], parts[1] - 1, parts[0]);
-        const today = new Date();
-        let years = today.getFullYear() - birthDate.getFullYear();
-        let months = today.getMonth() - birthDate.getMonth();
-        if (months < 0 || (months === 0 && today.getDate() < birthDate.getDate())) { years--; months += 12; }
-        return `${years} ετών, ${months} μηνών`;
-    }
-
-    function unlockAdmin() {
-        if(prompt("Κωδικός Διαχειριστή:") === "apd7") {
-            document.getElementById('admin-section').style.display = 'block';
-        } else { alert("Λάθος κωδικός."); }
+    function calculateAge(dob) {
+        const p = dob.split('/');
+        const birth = new Date(p[2], p[1]-1, p[0]);
+        const now = new Date();
+        let age = now.getFullYear() - birth.getFullYear();
+        if (now.getMonth() < birth.getMonth() || (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate())) age--;
+        return age;
     }
 
     function startTest() {
-        const name = document.getElementById('pName').value;
-        const dob = document.getElementById('pDOB').value;
+        const name = document.getElementById('pName').value, dob = document.getElementById('pDOB').value;
         if(!name || dob.length < 10) return alert("Συμπληρώστε τα στοιχεία.");
-        patientData = { 
-            name, dob, 
-            age: calculateAge(dob), 
-            email: document.getElementById('pEmail').value, 
-            responder: document.getElementById('pResponder').value,
-            date: new Date().toLocaleDateString('el-GR'), id: Date.now() 
-        };
+        patientData = { name, dob, age: calculateAge(dob), email: document.getElementById('pEmail').value, responder: document.getElementById('pResponder').value, date: new Date().toLocaleDateString('el-GR'), id: Date.now() };
         document.getElementById('screen-start').classList.add('hidden');
         document.getElementById('app-container').style.display = 'block';
         document.getElementById('screen-test').classList.remove('hidden');
@@ -195,44 +156,23 @@
         const q = flatQuestions[currentIdx];
         document.getElementById('cat-label').innerText = q.cat;
         document.getElementById('cat-desc').innerText = q.desc;
-        // Εδώ προστίθεται το πλήρες κείμενο
-        document.getElementById('q-text').innerText = `${currentIdx + 1}. ${q.text} σε σύγκριση με άλλα παιδιά της ίδιας ηλικίας.`;
+        document.getElementById('q-text').innerText = `${currentIdx + 1}. ${q.text}.`;
         document.getElementById('progress').style.width = ((currentIdx + 1) / flatQuestions.length * 100) + "%";
         
         const list = document.getElementById('options-list');
         list.innerHTML = "";
-        scale.forEach(opt => {
+        [{v:1, l:"+1", d:"μικρότερη δυσκολία"}, {v:0, l:"0", d:"ίδιος βαθμός"}, {v:-1, l:"-1", d:"ελαφρώς μεγαλύτερη"}, {v:-2, l:"-2", d:"μεγαλύτερη δυσκολία"}, {v:-3, l:"-3", d:"αρκετά μεγαλύτερη"}, {v:-4, l:"-4", d:"σημαντικά μεγαλύτερη"}, {v:-5, l:"-5", d:"αδυναμία λειτουργίας"}].forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'opt-btn' + (answers[currentIdx] === opt.v ? ' selected' : '');
-            btn.innerHTML = `<span class="opt-value">${opt.l}</span><span>${opt.d}</span>`;
-            btn.onclick = () => { 
-                answers[currentIdx] = opt.v; 
-                renderQuestion(); 
-                if (currentIdx < flatQuestions.length - 1) {
-                    setTimeout(goNext, 250);
-                }
-            };
+            btn.innerHTML = `<span class="opt-value">${opt.l}</span><span class="opt-text">${opt.d}</span>`;
+            btn.onclick = () => { answers[currentIdx] = opt.v; renderQuestion(); if(currentIdx < flatQuestions.length-1) setTimeout(goNext, 150); };
             list.appendChild(btn);
         });
-        
         document.getElementById('prev-btn').style.visibility = currentIdx > 0 ? 'visible' : 'hidden';
-        
-        if (currentIdx === flatQuestions.length - 1) {
-            document.getElementById('next-btn').innerText = "ΟΛΟΚΛΗΡΩΣΗ";
-        } else {
-            document.getElementById('next-btn').innerText = "ΕΠΟΜΕΝΟ →";
-        }
+        document.getElementById('next-btn').innerText = currentIdx === flatQuestions.length - 1 ? "ΟΛΟΚΛΗΡΩΣΗ" : "ΕΠΟΜΕΝΟ →";
     }
 
-    function goNext() {
-        if(answers[currentIdx] === null) return alert("Επιλέξτε απάντηση.");
-        if(currentIdx < flatQuestions.length - 1) { 
-            currentIdx++; renderQuestion(); 
-        } else { 
-            finalize(); 
-        }
-    }
-
+    function goNext() { if(answers[currentIdx] === null) return alert("Επιλέξτε απάντηση."); if(currentIdx < flatQuestions.length - 1) { currentIdx++; renderQuestion(); } else finalize(); }
     function goBack() { if(currentIdx > 0) { currentIdx--; renderQuestion(); } }
 
     function finalize() {
@@ -248,76 +188,54 @@
         document.getElementById('screen-test').classList.add('hidden');
         document.getElementById('screen-results').classList.remove('hidden');
         document.getElementById('res-name-display').innerText = patientData.name;
-        document.getElementById('res-age-display').innerText = `Ηλικία: ${patientData.age} (Από: ${patientData.responder})`;
+        document.getElementById('res-info-display').innerText = `Ηλικία: ${patientData.age} | Από: ${patientData.responder}`;
         document.getElementById('total-score').innerText = patientData.total;
-        const breakdown = document.getElementById('breakdown-list');
-        breakdown.innerHTML = "<h3>Ανάλυση Ενοτήτων</h3>";
+        const list = document.getElementById('breakdown-list'); list.innerHTML = "";
         sections.forEach(s => {
             const sSum = flatQuestions.map((q, i) => q.cat === s.name ? patientData.answers[i] : null).filter(v => v !== null).reduce((a, b) => a + b, 0);
-            breakdown.innerHTML += `<div class="result-row"><span>${s.name}</span><strong>${sSum}</strong></div>`;
+            list.innerHTML += `<div class="result-row"><span>${s.name}</span><span class="category-score">${sSum}</span></div>`;
         });
-    }
-
-    function renderHistory() {
-        const list = document.getElementById('history-list');
-        const search = document.getElementById('searchBar').value.toLowerCase();
-        list.innerHTML = "";
-        if (search.length < 2) return;
-        let db = JSON.parse(localStorage.getItem('chapps_db') || "[]");
-        db.filter(r => r.name.toLowerCase().includes(search)).reverse().forEach(record => {
-            const item = document.createElement('div');
-            item.className = 'history-card';
-            item.innerHTML = `<div><strong>${record.name}</strong><br><small>${record.date}</small></div>
-            <button class="del-btn" onclick="deleteRecord(${record.id})">ΔΙΑΓΡΑΦΗ</button>`;
-            list.appendChild(item);
-        });
-    }
-
-    function deleteRecord(id) {
-        if(!confirm("Διαγραφή;")) return;
-        let db = JSON.parse(localStorage.getItem('chapps_db') || "[]");
-        db = db.filter(r => r.id !== id);
-        localStorage.setItem('chapps_db', JSON.stringify(db));
-        renderHistory();
-    }
-
-    function deleteAllData() {
-        if(!confirm("Διαγραφή όλων;")) return;
-        localStorage.removeItem('chapps_db');
-        renderHistory();
     }
 
     function exportCSV() {
-        let csv = `CHAPPS REPORT;${patientData.name}\nΗλικία;${patientData.age}\nΣυμπληρώθηκε από;${patientData.responder}\nΣκορ;${patientData.total}\n\nΕνότητα;Ερώτηση;Βαθμός\n`;
+        let csv = `Όνομα;${patientData.name}\nΗμ. Γέννησης;${patientData.dob}\nΗλικία;${patientData.age}\nΣυμπληρώθηκε από;${patientData.responder}\nEmail;${patientData.email}\nΣκορ;${patientData.total}\n\nΕνότητα;Ερώτηση;Βαθμός\n`;
         flatQuestions.forEach((q, i) => csv += `"${q.cat}";"${q.text}";${patientData.answers[i]}\n`);
         downloadCSV(csv, `CHAPPS_${patientData.name}.csv`);
     }
 
     function exportMasterCSV() {
-        let db = JSON.parse(localStorage.getItem('chapps_db') || "[]");
-        let csv = "Όνομα;Ηλικία;Συμπληρώθηκε Από;Σκορ\n";
-        db.forEach(r => csv += `"${r.name}";"${r.age}";"${r.responder}";${r.total}\n`);
-        downloadCSV(csv, "CHAPPS_MASTER.csv");
+        let db = JSON.parse(localStorage.getItem('chapps_db') || "[]"), csv = "Όνομα;Ημ. Γέννησης;Ηλικία;Από;Σκορ;Ημερομηνία\n";
+        db.forEach(r => csv += `"${r.name}";"${r.dob}";${r.age};"${r.responder}";${r.total};"${r.date}"\n`);
+        downloadCSV(csv, "CHAPPS_MASTER_HISTORY.csv");
     }
 
-    function downloadCSV(csv, filename) {
+    function downloadCSV(csv, name) {
         const blob = new Blob(["\uFEFF", csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        link.click();
+        const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = name; link.click();
     }
 
     function sendToDoctor() {
-        let body = `CHAPPS - ${patientData.name}\nΗλικία: ${patientData.age}\nΣκορ: ${patientData.total}\n\nΑνάλυση:\n`;
+        let body = `ΑΞΙΟΛΟΓΗΣΗ CHAPPS - ${patientData.name}\nΗλικία: ${patientData.age}\nΣυμπληρώθηκε από: ${patientData.responder}\nΣκορ: ${patientData.total}\n\n`;
         sections.forEach(s => {
             const sSum = flatQuestions.map((q, i) => q.cat === s.name ? patientData.answers[i] : null).filter(v => v !== null).reduce((a, b) => a + b, 0);
             body += `${s.name}: ${sSum}\n`;
         });
-        window.location.href = `mailto:?subject=CHAPPS - ${patientData.name}&body=${encodeURIComponent(body)}`;
+        window.location.href = `mailto:?subject=CHAPPS Report - ${patientData.name}&body=${encodeURIComponent(body)}`;
     }
 
-    window.onload = () => { setTimeout(() => { document.getElementById('splash-screen').style.opacity = '0'; setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; document.getElementById('app-container').style.display = 'block'; }, 800); }, 2000); };
+    function unlockAdmin() { if(prompt("Κωδικός:") === "apd7") { document.getElementById('admin-panel').classList.remove('hidden'); renderHistory(); } }
+    function renderHistory() {
+        const list = document.getElementById('history-list'), search = document.getElementById('searchBar').value.toLowerCase();
+        list.innerHTML = "";
+        JSON.parse(localStorage.getItem('chapps_db') || "[]").filter(r => r.name.toLowerCase().includes(search)).reverse().forEach(r => {
+            const item = document.createElement('div'); item.className = 'history-item';
+            item.innerHTML = `<span>${r.name} (${r.date})</span><button onclick="deleteRec(${r.id})" style="background:var(--danger); border:none; color:white; border-radius:5px; padding:5px;">🗑️</button>`;
+            list.appendChild(item);
+        });
+    }
+    function deleteRec(id) { if(confirm("Διαγραφή εγγραφής;")) { let db = JSON.parse(localStorage.getItem('chapps_db') || "[]").filter(r => r.id !== id); localStorage.setItem('chapps_db', JSON.stringify(db)); renderHistory(); } }
+
+    window.onload = () => { setTimeout(() => { document.getElementById('splash-screen').style.opacity = '0'; setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; document.getElementById('app-container').style.display = 'block'; }, 800); }, 1500); };
 </script>
 </body>
 </html>
